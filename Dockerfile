@@ -22,7 +22,7 @@ RUN git clone --branch ${JELLYFIN_VERSION} --depth 1 https://github.com/jellyfin
 FROM alpine:3 AS runtime
 
 # TODO fix deps
-RUN apk add libstdc++ icu-libs
+RUN apk add libstdc++ icu-libs krb5-libs lttng-ust fontconfig 
 
 COPY --from=builder /jellyfin/dist /jellyfin
 
