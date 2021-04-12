@@ -40,8 +40,8 @@ FROM alpine:3 AS runtime
 
 RUN apk add libstdc++ icu-libs krb5-libs lttng-ust fontconfig ffmpeg
 
-COPY --from=builder /build /jellyfin/bin
-COPY --from=builder-web /build /jellyfin/bin/jellyfin-web
+COPY --from=builder /build /jellyfin
+COPY --from=builder-web /build /jellyfin-web
 
 WORKDIR /jellyfin
 
@@ -49,4 +49,4 @@ HEALTHCHECK --interval=35s --timeout=4s CMD wget http://localhost:8096 || exit 1
 
 EXPOSE 8096
 
-ENTRYPOINT [ "/jellyfin/bin/jellyfin" ]
+ENTRYPOINT [ "/jellyfin/jellyfin", "--datadir", "/data", "--configdir", "/config", "--cachedir", "/cache", "--webdir", "/jellyfin-web" ]
